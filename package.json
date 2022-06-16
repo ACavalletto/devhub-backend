@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.8",
+    "morgan": "^1.10.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "server": "node server",
+    "dev": "run-p server start"
+  },
+  "name": "devhub-backend",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ACavalletto/devhub-backend.git"
+  },
+  "author": "Marcus B, Khalid A, Nicholas M, Arnaud C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ACavalletto/devhub-backend/issues"
+  },
+  "homepage": "https://github.com/ACavalletto/devhub-backend#readme"
+}
