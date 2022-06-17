@@ -1,6 +1,7 @@
 // dependencies
 const express = require("express")
-
+// we are going to use mongoose, so we can extablish our connection to MONGODB
+const mongoose = require("mongoose")
 // Initialize the Express App, we call express like a function what that does is it returns an object, with all the properties and methods that we need to begin building our express web APP.
 const app = express();
 
@@ -8,6 +9,13 @@ const app = express();
 require('dotenv').config();
 
 const {PORT = 4000, MONGODB_URL } = process.env;
+// Below our settings we connect to mongodb
+mongoose.connect(MONGODB_URL);
+
+// Mongo Status Listen, ".on is a connected event listener and you can also do error in mongodb"
+mongoose.connection
+.on("connected", ()=> console.log("Connected to MongoDB"))
+.on("error", (err) => console.log("Error with MongoDB: " + err.message))
 // Mount Middleware
 
 // Mount Our Routes
