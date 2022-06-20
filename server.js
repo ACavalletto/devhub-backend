@@ -22,11 +22,22 @@ mongoose.connection
 // Mount Middleware
 app.use(cors());
 app.use(morgan("dev"));
+
+// app.use(express.urlencoded({extended: false}))
+// ^ only when express is serving HTML and creates req.body
+
+app.use(express.json());
+// ^ creates req.boy in json format
+
+
+
+
 app.use(express.urlencoded({extended: false}))
 // ^ only when express is serving HTML and creates req.body
 
 // app.use(express.json());
 // ^ creates req.boy in json format
+
 
 // Mount Our Routes
 app.get("/", (req, res) =>{
@@ -34,6 +45,42 @@ app.get("/", (req, res) =>{
 });
 
 // Index
+
+app.get("/dev", async (req, res) => {
+    // the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
+    // the "try" All they do is they allow us to capture exceptions or errors, as we call them if something were to go wrong, so all we have to do is put the code that we want to try.
+    try {
+        const dev = await Dev.find({})
+        res.send(dev);
+        
+    } catch (error) {
+        console.log("error: " , error);
+        res.send({error: "something went wrong - chec console"});
+
+    }
+})
+// non async await version
+app.get("/dev", (req, res) => {
+    // the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
+     Dev.find({}, (err, dev)=> {
+         res.send(dev);
+     })
+})
+
+
+// Create
+// any type of creation is typically sent as a post request and it's going to go to the same ui or the same endpoint.
+app.post("/dev", async (req, res) => {
+    try {
+        const person = Dev.create(req.body);
+        res.send(person)
+    } catch (error) {
+        console.log("error:" , error);
+        res.send({error: "something went wrong - check console"});
+        
+    }
+})
+
 
 
 // Create
@@ -43,4 +90,9 @@ app.get("/", (req, res) =>{
 
 app.listen(PORT, () => {
     console.log(`Express listening on port:${PORT}`);
+
 });
+
+
+// telling people to connect and listen
+
