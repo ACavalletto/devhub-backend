@@ -22,6 +22,7 @@ mongoose.connection
 // Mount Middleware
 app.use(cors());
 app.use(morgan("dev"));
+
 // app.use(express.urlencoded({extended: false}))
 // ^ only when express is serving HTML and creates req.body
 
@@ -30,12 +31,21 @@ app.use(express.json());
 
 
 
+
+app.use(express.urlencoded({extended: false}))
+// ^ only when express is serving HTML and creates req.body
+
+// app.use(express.json());
+// ^ creates req.boy in json format
+
+
 // Mount Our Routes
 app.get("/", (req, res) =>{
     res.send("Hello and welcome to the people app");
 });
 
 // Index
+
 app.get("/dev", async (req, res) => {
     // the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
     // the "try" All they do is they allow us to capture exceptions or errors, as we call them if something were to go wrong, so all we have to do is put the code that we want to try.
@@ -71,11 +81,18 @@ app.post("/dev", async (req, res) => {
     }
 })
 
+
+
+// Create
+
+
 // Tell Express to Listen, we'll add a callback function that gets invoked once it has begun listening right so once that is successful, we can have this console log prints out and just give us some feedback to let us know that express is listening.
 
 app.listen(PORT, () => {
     console.log(`Express listening on port:${PORT}`);
+
 });
 
 
 // telling people to connect and listen
+
