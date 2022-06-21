@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 //Fetch all Content linked to this Category
 //category_content = category.find({_id: {$in: category.content} }).toArray();
 
-const CategorySchema = new mongoose.schema({
+const CategorySchema = new mongoose.Schema({
     _id: String,
     //User ID + modifier passed into schema from restful route
     title: String,

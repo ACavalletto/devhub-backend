@@ -5,6 +5,8 @@ const mongoose = require("mongoose")
 const morgan = require("morgan")
 const cors = require("cors")
 const Dev = require("./models/Dev")
+const Category = require("./models/Category")
+const Content = require("./models/Content")
 // Initialize the Express App, we call express like a function what that does is it returns an object, with all the properties and methods that we need to begin building our express web APP.
 const app = express();
 
@@ -58,6 +60,8 @@ app.get("/dev", async (req, res) => {
 
     }
 })
+
+
 // non async await version
 // app.get("/dev", (req, res) => {
 // the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
@@ -80,6 +84,26 @@ app.post("/dev", async (req, res) => {
         console.log("error:" , error);
         res.json({error: "something went wrong - check console"});
         
+    }
+})
+app.post('/category', async (req, res) => { 
+    try {
+        res.json(Category.create(req.body));
+    } catch (error) { 
+        console.log("error:", error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
+app.post('/content', async (req, res) => { 
+    try {
+        let reference = req.body.reference
+        res.json(Content.create(req.body, async (err, newContent) => {
+            await Category.findByIdAndUpdate(reference, {$push: {content: newContent._id}})
+        }))
+    //Uses reference passed by req.body to push the newly created content doc _id to the array held within the parent category
+    } catch (error) { 
+        console.log("error:", error);
+        res.json({error: "something went wrong - check console"});
     }
 })
 
