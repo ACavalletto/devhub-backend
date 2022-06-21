@@ -94,6 +94,18 @@ app.post('/category', async (req, res) => {
         res.json({error: "something went wrong - check console"});
     }
 })
+app.post('/content', async (req, res) => { 
+    try {
+        let reference = req.body.reference
+        res.json(Content.create(req.body, async (err, newContent) => {
+            await Category.findByIdAndUpdate(reference, {$push: {content: newContent._id}})
+        }))
+    //Uses reference passed by req.body to push the newly created content doc _id to the array held within the parent category
+    } catch (error) { 
+        console.log("error:", error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
 
 
 
