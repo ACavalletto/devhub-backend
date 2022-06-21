@@ -81,7 +81,29 @@ app.post("/dev", async (req, res) => {
 
 
 
-// Create
+// Update
+// {new: true} if we make an update it will actually send back the updated version.
+// perform the updates and get back an updated version of that document
+app.put("/dev/:id", async (req, res) => {
+    try {
+        const updatedPerson = await Dev.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            {new: true})
+        res.json(updatedPerson)
+    } catch (error) {
+        console.log("error:" , error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
+
+// Delete
+
+
+
+
+
+
 
 
 // Tell Express to Listen, we'll add a callback function that gets invoked once it has begun listening right so once that is successful, we can have this console log prints out and just give us some feedback to let us know that express is listening.
