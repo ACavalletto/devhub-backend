@@ -60,7 +60,7 @@ app.get("/dev", async (req, res) => {
 })
 // non async await version
 // app.get("/dev", (req, res) => {
-//     // the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
+// the method .find will query the collection that way and i'm passing in an empty object to indicate to mongodb that I want all the documents.
 //      Dev.find({}, (err, dev)=> {
 //          res.send(dev);
 //      })
@@ -69,6 +69,10 @@ app.get("/dev", async (req, res) => {
 
 // Create
 // any type of creation is typically sent as a post request and it's going to go to the same ui or the same endpoint.
+
+//On frontend side userID from firebase with unique identifier tag added on will need to be passed with the req.body of what is to be created.
+
+//Need Create route for new category and content
 app.post("/dev", async (req, res) => {
     try {
         res.json(Dev.create(req.body));
@@ -84,6 +88,9 @@ app.post("/dev", async (req, res) => {
 // Update
 // {new: true} if we make an update it will actually send back the updated version.
 // perform the updates and get back an updated version of that document
+
+//Need route to edit category and one to edit content documents
+
 app.put("/dev/:id", async (req, res) => {
     try {
         const updatedPerson = await Dev.findByIdAndUpdate(
@@ -98,12 +105,7 @@ app.put("/dev/:id", async (req, res) => {
 })
 
 // Delete
-
-
-
-
-
-
+// Need route to delete category and one to delete individual content document. Category deletion should also delete any content documents linked to category.
 
 
 // Tell Express to Listen, we'll add a callback function that gets invoked once it has begun listening right so once that is successful, we can have this console log prints out and just give us some feedback to let us know that express is listening.
