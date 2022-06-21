@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //Push new Content ID to array within parent category category.content on create route of Content document
-const ContentSchema = new mongoose.schema({
+const ContentSchema = new mongoose.Schema({
     title: String,
     content: String,
 }, {timestamps: true})
