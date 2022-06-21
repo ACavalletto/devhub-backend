@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 // just displaying the schema
 // when you instantiate the "new"  you can add an additional object like timestamp
 const devSchema = new mongoose.Schema({
