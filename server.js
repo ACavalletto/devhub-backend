@@ -184,7 +184,14 @@ app.delete("/category/:id", async (req, res) => {
         res.json({error: "something went wrong - check console"});
     }
 })
-
+app.delete("/content/:id", async (req, res) => {
+    try {
+        res.json(await Content.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        console.log("error:" , error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
 
 
 // Tell Express to Listen, we'll add a callback function that gets invoked once it has begun listening right so once that is successful, we can have this console log prints out and just give us some feedback to let us know that express is listening.
