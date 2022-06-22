@@ -8,6 +8,10 @@ const Dev = require("./models/Dev")
 const Category = require("./models/Category")
 const Content = require("./models/Content")
 
+
+
+const { prependOnceListener } = require("./models/Dev")
+
 // Initialize the Express App, we call express like a function what that does is it returns an object, with all the properties and methods that we need to begin building our express web APP.
 const app = express();
 
@@ -23,6 +27,8 @@ mongoose.connection
 .on("connected", ()=> console.log("Connected to MongoDB"))
 .on("error", (err) => console.log("Error with MongoDB: " + err.message))
 // Mount Middleware
+// MERN stack APP where you have a separate code base for react in a separate code base for express that is a to coupled full stack application, 
+// so it is necessary to handle cores otherwise it's basically useless.
 app.use(cors());
 app.use(morgan("dev"));
 
@@ -142,6 +148,21 @@ app.put("/dev/:id", async (req, res) => {
         res.json({error: "something went wrong - check console"});
     }
 })
+app.put("/category/:id", async (req, res) => {
+    try {
+        res.json(await Category.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            { new: true }
+        ));
+
+    } catch (error) {
+        console.log('error: ', error);
+        res.json({error: 'something went wrong - check console'});
+    }
+
+})
+
 
 // Delete
 // Need route to delete category and one to delete individual content document. Category deletion should also delete any content documents linked to category.
