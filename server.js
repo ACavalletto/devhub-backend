@@ -61,6 +61,17 @@ app.get("/dev", async (req, res) => {
     }
 })
 
+app.get('/category/:id', async (req, res) => { 
+    let reference = req.body._id + req.params.id;
+    try {
+        res.json(await Category.findById({'_id': reference}));
+        
+    } catch (error) {
+        console.log("error: " , error);
+        res.json({error: "something went wrong - chec console"});
+
+    }
+})
 
 // non async await version
 // app.get("/dev", (req, res) => {
