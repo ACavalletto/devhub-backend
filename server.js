@@ -131,6 +131,15 @@ app.put("/dev/:id", async (req, res) => {
 // Delete
 // Need route to delete category and one to delete individual content document. Category deletion should also delete any content documents linked to category.
 
+app.delete("/dev/:id", async (req, res) => {
+    try {
+        res.json(await Dev.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        console.log("error:" , error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
+
 
 // Tell Express to Listen, we'll add a callback function that gets invoked once it has begun listening right so once that is successful, we can have this console log prints out and just give us some feedback to let us know that express is listening.
 
