@@ -7,7 +7,11 @@ const cors = require("cors")
 const Dev = require("./models/Dev")
 const Category = require("./models/Category")
 const Content = require("./models/Content")
+
+
+
 const { prependOnceListener } = require("./models/Dev")
+
 // Initialize the Express App, we call express like a function what that does is it returns an object, with all the properties and methods that we need to begin building our express web APP.
 const app = express();
 
@@ -67,12 +71,15 @@ app.get("/dev", async (req, res) => {
 app.get('/category/:id', async (req, res) => { 
     let reference = req.body._id + req.params.id;
     try {
-        res.json(await Category.findById({'_id': reference}));
-        
+        const category = await Category.findById({ '_id': reference })
+        const content = await Content.find({_id: { $in: category.content}})
+        res.json({
+            category: category,
+            content: content
+        })    
     } catch (error) {
         console.log("error: " , error);
         res.json({error: "something went wrong - chec console"});
-
     }
 })
 
