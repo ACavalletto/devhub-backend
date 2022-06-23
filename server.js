@@ -69,7 +69,7 @@ app.get("/dev", async (req, res) => {
 })
 
 app.get('/category/:id', async (req, res) => { 
-    let reference = req.body._id + req.params.id;
+    let reference =req.params.id;
     try {
         const category = await Category.findById({ '_id': reference })
         const content = await Content.find({_id: { $in: category.content}})
@@ -115,9 +115,9 @@ app.post('/category', async (req, res) => {
         res.json({error: "something went wrong - check console"});
     }
 })
-app.post('/content', async (req, res) => { 
+app.post('/content/:reference', async (req, res) => { 
     try {
-        let reference = req.body.reference
+        let reference = req.params.reference
         res.json(Content.create(req.body, async (err, newContent) => {
             await Category.findByIdAndUpdate(reference, {$push: {content: newContent._id}})
         }))
@@ -175,7 +175,7 @@ app.delete("/dev/:id", async (req, res) => {
 
 app.delete("/category/:id", async (req, res) => {
     try {
-        let reference = req.body._id
+        let reference = req.params.id
         let category = await Category.findByIdAndDelete({ '_id' : reference })
         await Content.deleteMany({ _id: { $in: category.content } })
         res.json(console.log('Deletion successful'))
