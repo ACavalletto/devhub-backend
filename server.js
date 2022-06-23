@@ -160,9 +160,7 @@ app.put("/category/:id", async (req, res) => {
         console.log('error: ', error);
         res.json({error: 'something went wrong - check console'});
     }
-
 })
-
 app.put("/content/:id", async (req, res) => {
     try {
         res.json(await Content.findByIdAndUpdate(
@@ -179,12 +177,33 @@ app.put("/content/:id", async (req, res) => {
 })
 
 
+
 // Delete
 // Need route to delete category and one to delete individual content document. Category deletion should also delete any content documents linked to category.
 
 app.delete("/dev/:id", async (req, res) => {
     try {
         res.json(await Dev.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        console.log("error:" , error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
+
+app.delete("/category/:id", async (req, res) => {
+    try {
+        let reference = req.body._id
+        let category = await Category.findByIdAndDelete({ '_id' : reference })
+        await Content.deleteMany({ _id: { $in: category.content } })
+        res.json(console.log('Deletion successful'))
+    } catch (error) {
+        console.log("error:" , error);
+        res.json({error: "something went wrong - check console"});
+    }
+})
+app.delete("/content/:id", async (req, res) => {
+    try {
+        res.json(await Content.findByIdAndDelete(req.params.id));
     } catch (error) {
         console.log("error:" , error);
         res.json({error: "something went wrong - check console"});
