@@ -163,6 +163,21 @@ app.put("/category/:id", async (req, res) => {
 
 })
 
+app.put("/content/:id", async (req, res) => {
+    try {
+        res.json(await Content.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            { new: true }
+        ));
+
+    } catch (error) {
+        console.log('error: ', error);
+        res.json({error: 'something went wrong - check console'});
+    }
+
+})
+
 
 // Delete
 // Need route to delete category and one to delete individual content document. Category deletion should also delete any content documents linked to category.
